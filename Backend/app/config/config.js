@@ -1,4 +1,4 @@
-export const JWT_EXPIRATION_TIME = 60*60*24*30;
+export const JWT_EXPIRE_TIME = 60*60*24*30;
 
 export const MAX_JSON_SIZE = "50mb";
 export const URL_ENCODED = true;

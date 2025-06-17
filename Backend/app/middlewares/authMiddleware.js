@@ -1,10 +1,9 @@
 import userModel from "../models/userModel.js";
-import { verifyToken } from "../utils/tokenUtility.js";
+import { verifyToken } from "../utility/tokenUtility.js";
 
 export const isLoggedIn = async (req, res, next) => {
     try{
         const token = req.cookies.token;
-
 
         if(!token){
             return res.status(401).json({
