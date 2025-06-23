@@ -1,0 +1,65 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import "tailwindcss";
+
+
+
+/*custom variables */
+@theme {
+  /* colors */
+  --color-cm-shadow: rgba(255, 255, 255, 0.5);
+  --color-cm-global: rgba(248, 248, 251, 0.7);
+
+  /* fonts */
+  --font-cm-popin: "Poppins", sans-serif;
+
+  /* Breakpoints */
+  --breakpoint-cm-xmd: 1050px;
+  --breakpoint-cm-xsm: 830px;
+}
+
+/* Custom Utility start */
+/* Global utility */
+
+/* Custom Utility end */
+
+
+/* Loader Custom Css Start */
+@keyframes indeterminate {
+  0% { left: -35%; right: 100%; }
+  60% { left: 100%; right: -90%; }
+  100% { left: 100%; right: -90%; }
+}
+
+@keyframes indeterminate-short {
+  0% { left: -200%; right: 100%; }
+  60% { left: 107%; right: -8%; }
+  100% { left: 107%; right: -8%; }
+}
+
+.animate-indeterminate {
+  animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+}
+
+.animate-indeterminate-short {
+  animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  animation-delay: 1.15s;
+}
+/* Loader Custom Css End */
+
+/* Scrollbar  */
+.rounded-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.rounded-scrollbar::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 9999px;
+}
+
+.rounded-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #a0aec0;
+  border-radius: 9999px;
+  border: 2px solid #f0f0f0;
+}
