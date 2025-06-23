@@ -15,7 +15,7 @@ const useRoadmapItemStore = create((set, get) => {
     comments: [],
     statuses: [],
     categories: [],
-    
+
     data: {
       limit: 14,
       status: "",
@@ -72,7 +72,6 @@ const useRoadmapItemStore = create((set, get) => {
       const { limit, status, category, sortBy, search } = data;
 
       try {
-        console.log(page);
         // Build query string dynamically
         const queryParams = new URLSearchParams();
 
@@ -89,10 +88,18 @@ const useRoadmapItemStore = create((set, get) => {
         );
 
         if (response.data.status === "success") {
+          const newItems = response.data.data;
           const existingItems = get().roadmapItems;
 
+          const mergedItems = [...existingItems, ...newItems];
+
+          // Remove duplicates based on _id
+          const uniqueItems = Array.from(
+            new Map(mergedItems.map((item) => [item._id, item])).values()
+          );
+
           set({
-            roadmapItems: [...existingItems, ...response.data.data],
+            roadmapItems: uniqueItems,
             hasMore: response.data.hasMore,
             total: response.data.total,
           });
@@ -103,30 +110,6 @@ const useRoadmapItemStore = create((set, get) => {
             error.message ||
             "Failed to fetch roadmap items."
         );
-      }
-    },
-
-    fetchRoadmapItems: async (page = 1, limit = 10) => {
-      try {
-        const response = await axiosInstance.get(
-          `/roadmap-items?page=${page}&limit=${limit}`
-        );
-
-        if (response.data.status === "success") {
-          const existingItems = get().roadmapItems;
-
-          set({
-            roadmapItems: [...existingItems, ...response.data.data],
-            hasMore: response.data.hasMore,
-          });
-        }
-      } catch (error) {
-        toast.error(
-          error?.response?.data?.message ||
-            error.message ||
-            "Failed to fetch roadmap items."
-        );
-      } finally {
       }
     },
 
@@ -181,12 +164,13 @@ const useRoadmapItemStore = create((set, get) => {
       try {
         setLoading(true);
         const { roadmapItemId } = data;
-        console.log(roadmapItemId);
         const response = await axiosInstance.post(`/comment`, data);
         if (response.data.status === "success") {
           await get().fetchItemDetails(roadmapItemId);
           get().resetRoadmapItems();
-          await get().fetchRoadmapItems();
+          get().clearData();
+          get().updatePage(1);
+          await get().fetchFilteredRoadmapItems();
         }
       } catch (error) {
         toast.error(error?.response?.data?.message || "Failed to add comment");
@@ -224,6 +208,10 @@ const useRoadmapItemStore = create((set, get) => {
         );
         if (response.data.status === "success") {
           await get().fetchItemDetails(roadmapItemId);
+          get().resetRoadmapItems();
+          get().clearData();
+          get().updatePage(1);
+          await get().fetchFilteredRoadmapItems();
         }
       } catch (error) {
         toast.error(

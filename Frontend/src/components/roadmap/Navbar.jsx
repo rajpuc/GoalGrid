@@ -24,14 +24,17 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [showDropDown, setShowDropDown] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
+
   const handleLogout = async () => {
     const isSuccess = await logout();
     if (isSuccess) navigate("/login");
   };
+
   const handleFilter = async () => {
     setShowDropDown(false);
     setShowFilter(!showFilter);
   };
+
   useEffect(() => {
     if (showFilter) {
       clearData();
@@ -40,18 +43,11 @@ const Navbar = () => {
     }
   }, [showFilter]);
 
-  const submitFilter = async () => {
+  const submitFilter = () => {
     updatePage(1);
     resetRoadmapItems();
-    await fetchFilteredRoadmapItems(data, 1);
+    fetchFilteredRoadmapItems(data, 1);
     incrementPage();
-  };
-
-  const clearFilterHandler = async () => {
-    clearData();
-    const data= { limit:14, status:'', category:'', sortBy:'', search:'' };
-    await fetchFilteredRoadmapItems(data, 1); 
-    updatePage(2)
   };
 
   return (
@@ -61,14 +57,6 @@ const Navbar = () => {
           <img className="w-full h-full scale-120" src={images.logo} alt="" />
         </div>
         <div className="flex items-center gap-3">
-          {data.category || data.status || data.sortBy || data.search ? (
-            <button
-              className="text-sm border-white p-1 px-2 rounded-sm cursor-pointer bg-blue-700 text-white border-2"
-              onClick={clearFilterHandler}
-            >
-              Clear Filter
-            </button>
-          ) : null}
           <div className="relative">
             <button onClick={handleFilter} className="flex ">
               <ListFilter />

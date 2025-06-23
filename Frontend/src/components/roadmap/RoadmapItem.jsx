@@ -28,9 +28,8 @@ const RoadmapItem = () => {
     clearData,
     incrementPage,
     page,
-    updatePage
+    updatePage,
   } = useRoadmapItemStore();
-
 
   const { loggedInUser } = useAuthenticationStore();
   const hasFetchedRef = useRef(false);
@@ -40,7 +39,7 @@ const RoadmapItem = () => {
   const loadMoreRoadmapItems = async () => {
     await fetchFilteredRoadmapItems(data, page);
     incrementPage();
-    if(!hasMore) updatePage(1);
+    if (!hasMore) updatePage(1);
   };
 
   useEffect(() => {
@@ -59,7 +58,7 @@ const RoadmapItem = () => {
         loader={<p className="text-center py-4">Loading more items...</p>}
         endMessage={
           <p className="text-center text-gray-500 py-4">
-            🎉 You've reached the end!
+            You've reached the end!
           </p>
         }
       >

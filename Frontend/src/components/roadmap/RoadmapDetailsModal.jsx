@@ -21,8 +21,7 @@ const Comment = ({ comment, itemId, onReply, depth }) => {
     setIsEditing(false);
   };
 
-  const indentClass = `${depth===0? "ml-0":"ml-6" }`; // max ml-8
-  console.log(comment.content + 'depth = ' + depth)
+  const indentClass = `${depth===0? "ml-0":"ml-6" }`; 
   return (
     <div className={`${indentClass} border-l border-l-gray-300 pl-3 my-3`}>
       <div className="flex items-center gap-2.5">
@@ -104,7 +103,6 @@ const RoadmapDetailsModal = ({ itemId, onClose }) => {
   const inputRef = useRef(null);
   const { item, comments, fetchItemDetails, addComment } =
     useRoadmapItemStore();
-  console.log(comments);
   const { loggedInUser } = useAuthenticationStore();
   const [newComment, setNewComment] = useState("");
   const [replyTo, setReplyTo] = useState(null);
