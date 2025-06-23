@@ -14,7 +14,8 @@ const app = express();
 
 // Global Application Middleware
 app.use(cors({
-  origin: 'http://localhost:5173', 
+//   origin: 'http://localhost:5173', 
+  origin: 'http://goalgrid1.onrender.com/api/v1', 
   credentials: true,               
 }));
 app.use(express.json({limit: MAX_JSON_SIZE}));
